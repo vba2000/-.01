@@ -1,0 +1,24 @@
+{% set title = title or "Theatre MVP" %}
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<meta name="color-scheme" content="dark">
+</head><body>
+<header class="header wrap"><div class="brand">🎭 Theatre MVP</div>
+<nav class="nav">
+  <a href="{{ url_for('index') }}">Главная</a>
+  {% if session.get('user_id') %}
+    <a href="{{ url_for('dashboard') }}">Личный кабинет</a>
+    {% if session.get('is_admin') %}<a href="{{ url_for('admin') }}">Админ</a>{% endif %}
+    <a href="{{ url_for('logout') }}">Выход</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">Вход</a>
+    <a href="{{ url_for('register') }}">Регистрация</a>
+  {% endif %}
+</nav></header>
+<main class="wrap">{% block content %}{% endblock %}</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer class="wrap" style="opacity:.7">© 2025 Theatre MVP</footer>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body></html>

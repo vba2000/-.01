@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}
+<div class="grid">
+  <div class="col-12">
+    <div class="slider" aria-label="Слайдер спектаклей">
+      <div class="slide active"><img src="{{ url_for('static', filename='img/slider1.jpg') }}" alt="Сцена 1"></div>
+      <div class="slide"><img src="{{ url_for('static', filename='img/slider2.jpg') }}" alt="Сцена 2"></div>
+      <div class="slide"><img src="{{ url_for('static', filename='img/slider3.jpg') }}" alt="Сцена 3"></div>
+      <div class="slide"><img src="{{ url_for('static', filename='img/slider4.jpg') }}" alt="Сцена 4"></div>
+      <div class="controls">
+        <button class="btn secondary" onclick="prevSlide()" aria-label="Предыдущий">←</button>
+        <button class="btn secondary" onclick="nextSlide()" aria-label="Следующий">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 card">
+    <h2>Добро пожаловать</h2>
+    <p>Минимально жизнеспособная ИС «Театр»: регистрация/авторизация, заявки на билеты, админ‑панель.</p>
+    <p><a class="btn" href="{{ url_for('register') }}">Зарегистрироваться</a>
+       <a class="btn secondary" href="{{ url_for('login') }}">Войти</a></p>
+  </div>
+</div>
+{% endblock %}

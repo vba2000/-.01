@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% block content %}
+<div class="grid">
+  <div class="col-12 card"><h2>Личный кабинет</h2><p>Здравствуйте, {{ user.full_name }}!</p></div>
+  <div class="col-12 col-6 card">
+    <h3>Создать заявку</h3>
+    <form method="post" action="{{ url_for('create_request') }}" novalidate>
+      <label for="performance_id">Спектакль</label>
+      <select id="performance_id" name="performance_id" required>
+        {% for p in performances %}<option value="{{ p.id }}">{{ p.title }} — {{ p.starts_at }} ({{ p.hall }})</option>{% endfor %}
+      </select>
+      <label for="qty">Количество билетов</label><input type="number" id="qty" name="qty" min="1" max="10" required value="1">
+      <label for="payment_method">Оплата</label>
+      <select id="payment_method" name="payment_method" required>
+        <option value="online">Онлайн</option><option value="card">Карта</option><option value="cash">Наличные</option>
+      </select>
+      <button class="btn" type="submit" data-toast="Заявка отправлена">Отправить</button>
+    </form>
+  </div>
+  <div class="col-12 col-6 card">
+    <h3>Мои заявки</h3>
+    {% if requests %}
+    <table class="table"><thead><tr><th>#</th><th>Спектакль</th><th>Дата</th><th>Кол-во</th><th>Оплата</th><th>Статус</th></tr></thead><tbody>
+    {% for r in requests %}<tr><td>{{ r.id }}</td><td>{{ r.title }}</td><td>{{ r.starts_at }}</td><td>{{ r.qty }}</td><td>{{ r.payment_method }}</td><td><span class="status {{ r.status }}">{{ r.status }}</span></td></tr>{% endfor %}
+    </tbody></table>
+    {% else %}<p>Заявок пока нет.</p>{% endif %}
+  </div>
+</div>
+{% endblock %}

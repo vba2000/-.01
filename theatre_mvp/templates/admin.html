@@ -1,0 +1,45 @@
+{% extends "base.html" %}{% block content %}
+<div class="grid">
+  <div class="col-12 card">
+    <h2>Админ‑панель</h2>
+    <form method="get" class="grid">
+      <div class="col-4">
+        <label for="status">Фильтр по статусу</label>
+        <select id="status" name="status">
+          <option value="">Все</option>
+          {% for s in ['new','confirmed','cancelled'] %}
+          <option value="{{ s }}" {% if request.args.get('status')==s %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-4" style="align-self:end"><button class="btn secondary" type="submit">Применить</button></div>
+    </form>
+  </div>
+  <div class="col-12 card">
+    <h3>Все заявки</h3>
+    <table class="table">
+      <thead><tr><th>#</th><th>Пользователь</th><th>Спектакль</th><th>Дата</th><th>Кол-во</th><th>Оплата</th><th>Статус</th><th>Действие</th></tr></thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.id }}</td>
+          <td>{{ r.full_name }}<br><small>{{ r.email }}</small></td>
+          <td>{{ r.title }}</td>
+          <td>{{ r.starts_at }}</td>
+          <td>{{ r.qty }}</td>
+          <td>{{ r.payment_method }}</td>
+          <td><span class="status {{ r.status }}">{{ r.status }}</span></td>
+          <td>
+            <form method="post" action="{{ url_for('set_status', req_id=r.id) }}" style="display:flex;gap:6px">
+              <input type="hidden" name="from" value="{{ request.full_path }}">
+              <button class="btn" name="status" value="confirmed" type="submit">Подтвердить</button>
+              <button class="btn danger" name="status" value="cancelled" type="submit">Отменить</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+@startuml
+!define Table(x) class x << (T,#FFB000) Table >>
+hide methods
+hide stereotypes
+Table(Users){id; email; login; password_hash; full_name; phone; is_admin; created_at}
+Table(Productions){id; title}
+Table(Performances){id; production_id; starts_at; hall}
+Table(Requests){id; user_id; performance_id; qty; payment_method; status; created_at}
+Table(AuthLog){id; user_id; action; ip; user_agent; ts}
+Users "1" -- "0..*" Requests
+Productions "1" -- "0..*" Performances
+Performances "1" -- "0..*" Requests
+Users "1" -- "0..*" AuthLog
+@enduml
